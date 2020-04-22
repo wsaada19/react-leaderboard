@@ -6,6 +6,6 @@ import './scss/index.scss';
 ReactDOM.render(<Leaderboard 
                     title= {"Some Leaderboard Display"}
                     headings = {["Name", "Score"]}
-                    rows = {["Will", 1]}
+                    rows = {[["Will", 1], ["Bill", 5]]}
                      />,
         document.getElementById('root'));
