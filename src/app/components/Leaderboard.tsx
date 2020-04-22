@@ -7,7 +7,6 @@ type LeaderboardProps = {
     rows: (string | number)[][];
 }
 
- const Leaderboard: React.FunctionComponent<LeaderboardProps> = ({title, headings, rows}) => {
 const Leaderboard = (props: LeaderboardProps) => {
   const getHeadingRow = () => {
       return(
