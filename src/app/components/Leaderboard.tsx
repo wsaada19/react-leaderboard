@@ -4,7 +4,7 @@ import Cell from "./Cell";
 type LeaderboardProps = {
   title: string;
   className?: string;
-  subtitle: string;
+  subtitle?: string;
   headings?: string[];
   rows: (string | number)[][];
 };
@@ -32,7 +32,7 @@ const Leaderboard = (props: LeaderboardProps) => {
   return (
     <div className={`leaderboard ${className}`}>
       <h2>{title}</h2>
-      <h3>{subtitle}</h3>
+      {subtitle ? <h3>{subtitle}</h3> : null}
       <table>
         {headings ? <thead>{getHeadingRow()}</thead> : null}
         <tbody>{getDataRow()}</tbody>
