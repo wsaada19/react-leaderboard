@@ -1,35 +1,44 @@
-import * as React from 'react';
-import Cell from './Cell';
+import * as React from "react";
+import Cell from "./Cell";
 
 type LeaderboardProps = {
-    title: string;
-    headings: string[];
-    rows: (string | number)[][];
-}
+  title: string;
+  className?: string;
+  subtitle: string;
+  headings?: string[];
+  rows: (string | number)[][];
+};
 
 const Leaderboard = (props: LeaderboardProps) => {
+  const { title, className, subtitle, headings, rows } = props;
+
   const getHeadingRow = () => {
-      return(
-        <tr>
+    return (
+      <tr>
         <th>#</th>
-        { props.headings.map((header, index) => {return <th key={index}>{header}</th>;}) }
-        </tr>
-      );
-  }
-  
+        {headings.map((header, index) => {
+          return <th key={index}>{header}</th>;
+        })}
+      </tr>
+    );
+  };
+
   const getDataRow = () => {
-      return props.rows.map((row, index) => {return <Cell row={row} placement={index} key={index} />});
-  }
-  
-  return(
-    <div className = "leaderboard">
-      <h4>{props.title}</h4>
+    return rows.map((row, index) => {
+      return <Cell row={row} placement={index} key={index} />;
+    });
+  };
+
+  return (
+    <div className={`leaderboard ${className}`}>
+      <h2>{title}</h2>
+      <h3>{subtitle}</h3>
       <table>
-        <thead>{getHeadingRow()}</thead>
+        {headings ? <thead>{getHeadingRow()}</thead> : null}
         <tbody>{getDataRow()}</tbody>
       </table>
     </div>
-    );
-}
+  );
+};
 
- export default Leaderboard;
+export default Leaderboard;
