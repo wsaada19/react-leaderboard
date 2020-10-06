@@ -1,5 +1,6 @@
 import * as React from "react";
 import Cell from "./Cell";
+import LeaderboardNav from "./LeaderboardNav";
 
 type LeaderboardProps = {
   title: string;
@@ -7,10 +8,13 @@ type LeaderboardProps = {
   subtitle?: string;
   headings?: string[];
   rows: (string | number)[][];
+  limit?: number;
 };
 
 const Leaderboard = (props: LeaderboardProps) => {
-  const { title, className, subtitle, headings, rows } = props;
+  const { title, className, subtitle, headings, rows, limit } = props;
+
+  const [page, setPage] = React.useState(0);
 
   const getHeadingRow = () => {
     return (
@@ -24,9 +28,17 @@ const Leaderboard = (props: LeaderboardProps) => {
   };
 
   const getDataRow = () => {
-    return rows.map((row, index) => {
-      return <Cell row={row} placement={index} key={index} />;
-    });
+    return rows
+      .filter(
+        (row, index) => index >= (page * limit) && index < (page * limit) + limit
+      )
+      .map((row, index) => {
+        return <Cell row={row} placement={index + (page * limit)} key={index} />;
+      });
+  };
+
+  const updateRow = (value: number): void => {
+    setPage(value);
   };
 
   return (
@@ -37,6 +49,11 @@ const Leaderboard = (props: LeaderboardProps) => {
         {headings ? <thead>{getHeadingRow()}</thead> : null}
         <tbody>{getDataRow()}</tbody>
       </table>
+      <LeaderboardNav
+        current={page}
+        total={Math.ceil(rows.length / limit)}
+        onChange={updateRow}
+      />
     </div>
   );
 };

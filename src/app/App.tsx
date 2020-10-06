@@ -12,8 +12,12 @@ ReactDOM.render(
     rows={[
       ["Will", 1005],
       ["Bill", 934],
+      ["Jim", 767],
+      ["Tony", 711],
       ["Bob", 456],
+      ["George", 409]
     ]}
+    limit={3}
   />,
   document.getElementById("root")
 );
