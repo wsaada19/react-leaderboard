@@ -27,14 +27,24 @@ const Leaderboard = (props: LeaderboardProps) => {
     );
   };
 
+  const getPlacement = (index: number) => {
+    if (limit) {
+      return index + page * limit;
+    } else {
+      return index;
+    }
+  };
+
   const getDataRow = () => {
-    return rows
-      .filter(
-        (row, index) => index >= (page * limit) && index < (page * limit) + limit
-      )
-      .map((row, index) => {
-        return <Cell row={row} placement={index + (page * limit)} key={index} />;
-      });
+    let rowsToShow = rows;
+    if (limit) {
+      rowsToShow = rows.filter(
+        (row, index) => index >= page * limit && index < page * limit + limit
+      );
+    }
+    return rowsToShow.map((row, index) => {
+      return <Cell row={row} placement={getPlacement(index)} key={index} />;
+    });
   };
 
   const updateRow = (value: number): void => {
