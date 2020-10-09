@@ -9,10 +9,11 @@ type LeaderboardProps = {
   headings?: string[];
   rows: (string | number)[][];
   limit?: number;
+  rowColor?: string;
 };
 
 const Leaderboard = (props: LeaderboardProps) => {
-  const { title, className, subtitle, headings, rows, limit } = props;
+  const { title, className, subtitle, headings, rows, limit, rowColor } = props;
 
   const [page, setPage] = React.useState(0);
 
