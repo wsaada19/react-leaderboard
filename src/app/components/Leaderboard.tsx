@@ -1,6 +1,6 @@
-import * as React from "react";
-import Cell from "./Cell";
-import LeaderboardNav from "./LeaderboardNav";
+import * as React from 'react';
+import Cell from './Cell';
+import LeaderboardNav from './LeaderboardNav';
 
 type LeaderboardProps = {
   title: string;
@@ -9,15 +9,19 @@ type LeaderboardProps = {
   headings?: string[];
   rows: (string | number)[][];
   limit?: number;
-  rowColor?: string;
 };
 
-const Leaderboard = (props: LeaderboardProps) => {
-  const { title, className, subtitle, headings, rows, limit, rowColor } = props;
-
+const Leaderboard = ({
+  title,
+  className,
+  subtitle,
+  headings,
+  rows,
+  limit,
+}: LeaderboardProps): JSX.Element => {
   const [page, setPage] = React.useState(0);
 
-  const getHeadingRow = () => {
+  const getHeadingRow = (): JSX.Element => {
     return (
       <tr>
         <th>#</th>
@@ -28,21 +32,12 @@ const Leaderboard = (props: LeaderboardProps) => {
     );
   };
 
-  const getPlacement = (index: number) => {
-    if (limit) {
-      return index + page * limit;
-    } else {
-      return index;
-    }
+  const getPlacement = (index: number): number => {
+    return limit ? index + limit * page : index;
   };
 
-  const getDataRow = () => {
-    let rowsToShow = rows;
-    if (limit) {
-      rowsToShow = rows.filter(
-        (row, index) => index >= page * limit && index < page * limit + limit
-      );
-    }
+  const getDataRow = (): JSX.Element[] => {
+    const rowsToShow = limit ? rows.slice(page * limit, page * limit + limit) : rows;
     return rowsToShow.map((row, index) => {
       return <Cell row={row} placement={getPlacement(index)} key={index} />;
     });
@@ -55,16 +50,12 @@ const Leaderboard = (props: LeaderboardProps) => {
   return (
     <div className={`leaderboard ${className}`}>
       <h2>{title}</h2>
-      {subtitle ? <h3>{subtitle}</h3> : null}
+      {subtitle && <h3>{subtitle}</h3>}
       <table>
-        {headings ? <thead>{getHeadingRow()}</thead> : null}
+        {headings && <thead>{getHeadingRow()}</thead>}
         <tbody>{getDataRow()}</tbody>
       </table>
-      <LeaderboardNav
-        current={page}
-        total={Math.ceil(rows.length / limit)}
-        onChange={updateRow}
-      />
+      <LeaderboardNav total={Math.ceil(rows.length / limit)} onChange={updateRow} />
     </div>
   );
 };

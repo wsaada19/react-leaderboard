@@ -1,15 +1,15 @@
-import * as React from "react";
+import * as React from 'react';
 
 type CellProps = {
   row: (string | number)[];
   placement: number;
 };
 
-const Cell = (props: CellProps) => {
+const Cell = ({ row, placement }: CellProps): JSX.Element => {
   return (
     <tr>
-      <td>{props.placement + 1}</td>
-      {props.row.map((element, index) => {
+      <td>{placement + 1}</td>
+      {row.map((element, index) => {
         return <td key={index}>{element}</td>;
       })}
     </tr>
