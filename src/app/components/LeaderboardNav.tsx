@@ -1,14 +1,12 @@
-import * as React from "react";
-import { getJSDocParameterTags, TypeFormatFlags } from "typescript";
+import * as React from 'react';
 
 type LeaderboardNavProps = {
-  current: number;
   total: number;
   onChange: (value: number) => void;
 };
 
 const LeaderboardNav = (props: LeaderboardNavProps) => {
-  const { current, total, onChange } = props;
+  const { total, onChange } = props;
 
   const getPages = () => {
     const elements: JSX.Element[] = [];
